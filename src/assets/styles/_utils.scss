@@ -1,0 +1,13 @@
+$base_font_size: 0.125rem;
+
+@for $i from 1 through 20 {
+  .font-size-#{$i * 2} {
+    font-size: #{$base_font_size * $i};
+  }
+}
+
+@for $j from 1 through 10 {
+  .w-#{$j * 10} {
+    width: #{$j * 10%};
+  }
+}

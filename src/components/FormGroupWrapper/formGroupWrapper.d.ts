@@ -1,4 +1,4 @@
-type FormControllerType =
+declare type FormControllerType =
   | "text"
   | "email"
   | "number"
@@ -7,16 +7,24 @@ type FormControllerType =
   | "radio"
   | "date-picker";
 
-type FormGroupWrapperProps = {
+declare type FormGroupWrapperProps = {
   controllerProps: any;
   componentsProps?: any;
   type: FormControllerType;
   label: string;
   controllerClass?: string;
+  errorMessage?: string;
 };
 
-type RenderControllerProps = {
+declare type RenderControllerProps = {
   controllerProps: any;
   componentsProps?: any;
   type: FormControllerType;
+};
+
+declare type SingleOption = {
+  label: string;
+  value: string;
+  onChange?: () => void;
+  checked?: boolean;
 };

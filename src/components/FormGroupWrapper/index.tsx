@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { AppViewContext } from "context/AppView";
+import Render from "components/Render";
 
 const FormGroupWrapper: React.FC<FormGroupWrapperProps> = ({
   type,
@@ -12,6 +13,7 @@ const FormGroupWrapper: React.FC<FormGroupWrapperProps> = ({
   componentsProps,
   label,
   controllerClass = "flex-grow-1",
+  errorMessage,
 }) => {
   const { isPhoneView } = useContext(AppViewContext);
 
@@ -21,7 +23,9 @@ const FormGroupWrapper: React.FC<FormGroupWrapperProps> = ({
         isPhoneView ? "flex-column" : "align-items-center"
       } my-3`}
     >
-      <div className={`font-size-16 ${isPhoneView ? "w-100" : "w-30 me-3"}`}>
+      <div
+        className={`font-size-16 ${isPhoneView ? "w-100 mb-1" : "w-30 me-3"}`}
+      >
         {label}
       </div>
       <div className={`${controllerClass}`}>
@@ -30,6 +34,9 @@ const FormGroupWrapper: React.FC<FormGroupWrapperProps> = ({
           controllerProps={controllerProps}
           componentsProps={componentsProps}
         />
+        <Render when={!!errorMessage}>
+          <div className="text-danger font-size-12">{errorMessage}</div>
+        </Render>
       </div>
     </div>
   );
@@ -65,25 +72,25 @@ const RenderController: React.FC<RenderControllerProps> = ({
       );
 
     case "radio":
-      return controllerProps.radioOptions.map(
-        (option: { label: string; value: string }) => {
-          return (
-            <Form.Check
-              inline={controllerProps.inline}
-              name={controllerProps.name}
-              key={option.value}
-              type="radio"
-              label={option.label}
-              value={option.value}
-            />
-          );
-        }
-      );
+      return controllerProps.radioOptions.map((option: SingleOption) => {
+        return (
+          <Form.Check
+            inline={controllerProps.inline}
+            name={controllerProps.name}
+            key={option.value}
+            type="radio"
+            label={option.label}
+            value={option.value}
+            onChange={option.onChange}
+            checked={option.checked}
+            disabled={controllerProps.disabled}
+          />
+        );
+      });
 
     case "date-picker":
       return (
         <DatePicker
-          onChange={() => console.log("change")}
           className="form-control"
           showTimeInput={false}
           adjustDateOnChange={false}

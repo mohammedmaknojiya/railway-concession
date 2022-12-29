@@ -2,6 +2,7 @@ export const destinationStation = [
   {
     label: "Byculla Station",
     value: "Byculla Station",
+    isDefault: true,
   },
   {
     label: "Sandhrust Road Station",
@@ -48,56 +49,89 @@ export const branchOptions = [
 export const academicYearOptions = [
   {
     label: "First Year",
-    value: "First Year",
+    value: "1",
   },
   {
     label: "Second Year",
-    value: "Second Year",
+    value: "2",
   },
   {
     label: "Third Year",
-    value: "Third Year",
+    value: "3",
   },
   {
     label: "Fourth Year",
-    value: "Fourth Year",
+    value: "4",
   },
 ];
 
 export const semesterOptions = [1, 2, 3, 4, 5, 6, 7, 8].map((year) => ({
-  label: year,
-  value: year,
+  label: year.toString(),
+  value: year.toString(),
 }));
 
-export const genderOptions = [
+export const getGenderOptions = (
+  setFieldValue: any,
+  values: CFormInitialValues
+) => [
   {
     label: "Male",
     value: "Male",
+    onChange: () => {
+      setFieldValue("gender", "Male");
+    },
+    checked: values.gender === "Male",
   },
   {
     label: "Female",
     value: "Female",
+    onChange: () => {
+      setFieldValue("gender", "Female");
+    },
+    checked: values.gender === "Female",
   },
 ];
 
-export const travelClassOptions = [
+export const getTravelClassOptions = (
+  setFieldValue: any,
+  values: CFormInitialValues
+) => [
   {
     label: "First Class",
     value: "First Class",
+    onChange: () => {
+      setFieldValue("travelClass", "First Class");
+    },
+    checked: values.travelClass === "First Class",
   },
   {
     label: "Second Class",
     value: "Second Class",
+    onChange: () => {
+      setFieldValue("travelClass", "Second Class");
+    },
+    checked: values.travelClass === "Second Class",
   },
 ];
 
-export const passDurationOptions = [
+export const getPassDurationOptions = (
+  setFieldValue: any,
+  values: CFormInitialValues
+) => [
   {
     label: "Monthly",
     value: "Monthly",
+    checked: values.passDuration === "Monthly",
+    onChange: () => {
+      setFieldValue("passDuration", "Monthly");
+    },
   },
   {
     label: "Quarterly",
     value: "Quarterly",
+    checked: values.passDuration === "Quarterly",
+    onChange: () => {
+      setFieldValue("passDuration", "Quarterly");
+    },
   },
 ];

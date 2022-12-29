@@ -7,3 +7,17 @@
 .h-100vh {
   height: 100vh !important;
 }
+
+.hover-light-gray {
+  &:hover {
+    background-color: rgb(245, 245, 245);
+  }
+}
+
+.rounded-8 {
+  border-radius: 0.5rem;
+}
+
+.light-shadow {
+  box-shadow: 0 0 2px #ccc;
+}

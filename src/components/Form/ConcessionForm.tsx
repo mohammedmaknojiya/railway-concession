@@ -19,7 +19,7 @@ const ConcessionForm: React.FC<
     formikProps;
 
   return (
-    <div className="container my-5">
+    <div className="container my-4">
       <FormGroupWrapper
         type="text"
         label="Full Name"

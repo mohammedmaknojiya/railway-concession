@@ -4,6 +4,7 @@ import { object } from "yup";
 
 import ConcessionForm from "./ConcessionForm";
 import { branchOptions, destinationStation } from "./utils";
+import { useNavigate } from "react-router-dom";
 
 const schema = object({});
 
@@ -29,8 +30,11 @@ const ConcessionFormWrapper = () => {
     travelClass: "First Class",
   };
 
+  const navigate = useNavigate();
+
   const onSubmit = async (values: CFormInitialValues) => {
     console.log("submit", values);
+    navigate("/success");
   };
 
   return (

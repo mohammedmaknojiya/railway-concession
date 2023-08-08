@@ -1,17 +1,18 @@
 import { Formik } from "formik";
-import { Button, Form } from "react-bootstrap";
-import { object } from "yup";
+import { Button, Form, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import ConcessionForm from "./ConcessionForm";
 import { branchOptions, destinationStation } from "./utils";
-import { useNavigate } from "react-router-dom";
-
-const schema = object({});
+import { addUserDetails } from "api/users";
+import { getUserDetailsSchema } from "./userDetailsSchema";
 
 const ConcessionFormWrapper = () => {
   const initialValues: CFormInitialValues = {
     fullName: "",
     gender: "Male",
+    rollNumber: "",
     emailID: "",
     contact: "",
     dob: new Date(),
@@ -33,14 +34,27 @@ const ConcessionFormWrapper = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (values: CFormInitialValues) => {
-    console.log("submit", values);
-    navigate("/success");
+    try {
+      const response = await addUserDetails(values);
+      if (response.status === 201) {
+        navigate("/success", {
+          state: {
+            enrollmentNumber: response?.data?.result.enrollmentNumber,
+          },
+        });
+        toast.success("Form submitted successfully");
+      } else {
+        toast.error("Error submitting form");
+      }
+    } catch (err) {
+      toast.error("Error submitting form");
+    }
   };
 
   return (
     <Formik
       initialValues={initialValues}
-      validationSchema={schema}
+      validationSchema={getUserDetailsSchema()}
       onSubmit={onSubmit}
       enableReinitialize
     >
@@ -55,6 +69,9 @@ const ConcessionFormWrapper = () => {
                 disabled={formik.isSubmitting}
                 onSubmit={() => formik.handleSubmit()}
               >
+                {formik.isSubmitting && (
+                  <Spinner as="span" size="sm" className="me-2" />
+                )}
                 Submit
               </Button>
             </div>

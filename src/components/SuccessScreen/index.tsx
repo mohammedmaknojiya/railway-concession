@@ -1,12 +1,13 @@
 import { PersonFilled } from "@fluentui/react-icons";
 import { ClockRegular } from "@fluentui/react-icons";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useContext } from "react";
 
 import { AppViewContext } from "context/AppView";
 
 const SuccessScreen = () => {
   const { isPhoneView } = useContext(AppViewContext);
+  const location = useLocation();
 
   return (
     <div className="container my-4 overflow-auto">
@@ -18,7 +19,9 @@ const SuccessScreen = () => {
         >
           <PersonFilled fontSize={48} className="me-3 text-primary" />
           <div className="font-size-36 me-3 text-muted">Enrollment Number</div>
-          <div className="font-size-36 fw-bold">#{"123"}</div>
+          <div className="font-size-36 fw-bold">
+            #{location?.state?.enrollmentNumber || "000000"}
+          </div>
         </div>
         <div className="my-4">
           <div className="font-size-30 fw-bold">

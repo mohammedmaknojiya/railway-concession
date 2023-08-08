@@ -15,8 +15,25 @@ const ConcessionForm: React.FC<
   FormikProps<CFormInitialValues> & FormikHandlers
 > = (props) => {
   const { ...formikProps } = props;
-  const { values, touched, errors, isSubmitting, handleChange, setFieldValue } =
-    formikProps;
+  const {
+    values,
+    touched,
+    errors,
+    isSubmitting,
+    handleChange,
+    setFieldValue,
+    handleBlur,
+  } = formikProps;
+
+  const getIsInValidAndErrorMessage = (formField: string) => {
+    const isInvalid =
+      getIn(touched, formField, false) && getIn(errors, formField, false);
+    const errorMessage = isInvalid ? getIn(errors, formField) : null;
+    return {
+      isInvalid,
+      errorMessage,
+    };
+  };
 
   return (
     <div className="container my-4">
@@ -28,12 +45,28 @@ const ConcessionForm: React.FC<
           autoComplete: "off",
           name: "fullName",
           value: values.fullName,
-          isInvalid: touched.fullName && errors.fullName,
+          isInvalid: getIsInValidAndErrorMessage("fullName").isInvalid,
           onChange: handleChange,
           disabled: isSubmitting,
           autoFocus: true,
+          onBlur: handleBlur,
         }}
-        errorMessage={getIn(errors, "fullName")}
+        errorMessage={getIsInValidAndErrorMessage("fullName").errorMessage}
+      />
+      <FormGroupWrapper
+        type="text"
+        label="Roll Number"
+        controllerProps={{
+          placeholder: "Enter roll number",
+          autoComplete: "off",
+          name: "rollNumber",
+          value: values.rollNumber,
+          isInvalid: getIsInValidAndErrorMessage("rollNumber").isInvalid,
+          onChange: handleChange,
+          disabled: isSubmitting,
+          onBlur: handleBlur,
+        }}
+        errorMessage={getIsInValidAndErrorMessage("rollNumber").errorMessage}
       />
       <FormGroupWrapper
         type="radio"
@@ -53,11 +86,12 @@ const ConcessionForm: React.FC<
           autoComplete: "off",
           name: "emailID",
           value: values.emailID,
-          isInvalid: touched.emailID && errors.emailID,
+          isInvalid: getIsInValidAndErrorMessage("emailID").isInvalid,
           onChange: handleChange,
           disabled: isSubmitting,
+          onBlur: handleBlur,
         }}
-        errorMessage={getIn(errors, "emailID")}
+        errorMessage={getIsInValidAndErrorMessage("emailID").errorMessage}
       />
       <FormGroupWrapper
         type="text"
@@ -67,11 +101,12 @@ const ConcessionForm: React.FC<
           autoComplete: "off",
           name: "contact",
           value: values.contact,
-          isInvalid: touched.contact && errors.contact,
+          isInvalid: getIsInValidAndErrorMessage("contact").isInvalid,
           onChange: handleChange,
           disabled: isSubmitting,
+          onBlur: handleBlur,
         }}
-        errorMessage={getIn(errors, "contact")}
+        errorMessage={getIsInValidAndErrorMessage("contact").errorMessage}
       />
       <FormGroupWrapper
         type="date-picker"
@@ -80,11 +115,11 @@ const ConcessionForm: React.FC<
           placeholderText: "Select DOB",
           dateFormat: "MMM dd, yyyy",
           selected: values.dob,
-          isInvalid: touched.dob && errors.dob,
+          isInvalid: getIsInValidAndErrorMessage("dob").isInvalid,
           onChange: (selectedDate: Date) => setFieldValue("dob", selectedDate),
           disabled: isSubmitting,
         }}
-        errorMessage={getIn(errors, "dob")}
+        errorMessage={getIsInValidAndErrorMessage("dob").errorMessage}
         controllerClass=""
       />
       <FormGroupWrapper
@@ -95,11 +130,12 @@ const ConcessionForm: React.FC<
           autoComplete: "off",
           name: "address",
           value: values.address,
-          isInvalid: touched.address && errors.address,
+          isInvalid: getIsInValidAndErrorMessage("address").isInvalid,
           onChange: handleChange,
           disabled: isSubmitting,
+          onBlur: handleBlur,
         }}
-        errorMessage={getIn(errors, "address")}
+        errorMessage={getIsInValidAndErrorMessage("address").errorMessage}
       />
       <FormGroupWrapper
         type="text"
@@ -109,11 +145,12 @@ const ConcessionForm: React.FC<
           autoComplete: "off",
           name: "pinCode",
           value: values.pinCode,
-          isInvalid: touched.pinCode && errors.pinCode,
+          isInvalid: getIsInValidAndErrorMessage("pinCode").isInvalid,
           onChange: handleChange,
           disabled: isSubmitting,
+          onBlur: handleBlur,
         }}
-        errorMessage={getIn(errors, "pinCode")}
+        errorMessage={getIsInValidAndErrorMessage("pinCode").errorMessage}
       />
       <FormGroupWrapper
         type="text"
@@ -123,10 +160,12 @@ const ConcessionForm: React.FC<
           autoComplete: "off",
           name: "sourceStation",
           value: values.sourceStation,
-          isInvalid: touched.sourceStation && errors.sourceStation,
+          isInvalid: getIsInValidAndErrorMessage("sourceStation").isInvalid,
           onChange: handleChange,
           disabled: isSubmitting,
+          onBlur: handleBlur,
         }}
+        errorMessage={getIsInValidAndErrorMessage("sourceStation").errorMessage}
       />
       <FormGroupWrapper
         type="select"
@@ -150,11 +189,14 @@ const ConcessionForm: React.FC<
           autoComplete: "off",
           name: "prevPassNumber",
           value: values.prevPassNumber,
-          isInvalid: touched.prevPassNumber && errors.prevPassNumber,
+          isInvalid: getIsInValidAndErrorMessage("prevPassNumber").isInvalid,
           onChange: handleChange,
           disabled: isSubmitting,
+          onBlur: handleBlur,
         }}
-        errorMessage={getIn(errors, "prevPassNumber")}
+        errorMessage={
+          getIsInValidAndErrorMessage("prevPassNumber").errorMessage
+        }
       />
       <FormGroupWrapper
         type="text"
@@ -164,12 +206,15 @@ const ConcessionForm: React.FC<
           autoComplete: "off",
           name: "reEnterPrevPassNumber",
           value: values.reEnterPrevPassNumber,
-          isInvalid:
-            touched.reEnterPrevPassNumber && errors.reEnterPrevPassNumber,
+          isInvalid: getIsInValidAndErrorMessage("reEnterPrevPassNumber")
+            .isInvalid,
           onChange: handleChange,
           disabled: isSubmitting,
+          onBlur: handleBlur,
         }}
-        errorMessage={getIn(errors, "reEnterPrevPassNumber")}
+        errorMessage={
+          getIsInValidAndErrorMessage("reEnterPrevPassNumber").errorMessage
+        }
       />
       <FormGroupWrapper
         type="text"
@@ -179,11 +224,14 @@ const ConcessionForm: React.FC<
           autoComplete: "off",
           name: "oldVoucherNumber",
           value: values.oldVoucherNumber,
-          isInvalid: touched.oldVoucherNumber && errors.oldVoucherNumber,
+          isInvalid: getIsInValidAndErrorMessage("oldVoucherNumber").isInvalid,
           onChange: handleChange,
           disabled: isSubmitting,
+          onBlur: handleBlur,
         }}
-        errorMessage={getIn(errors, "oldVoucherNumber")}
+        errorMessage={
+          getIsInValidAndErrorMessage("oldVoucherNumber").errorMessage
+        }
       />
       <FormGroupWrapper
         type="date-picker"
@@ -192,12 +240,14 @@ const ConcessionForm: React.FC<
           placeholderText: "Select Expiry Date",
           dateFormat: "MMM dd, yyyy",
           selected: values.oldPassExpiryDate,
-          isInvalid: touched.oldPassExpiryDate && errors.oldPassExpiryDate,
+          isInvalid: getIsInValidAndErrorMessage("oldPassExpiryDate").isInvalid,
           onChange: (selectedDate: Date) =>
             setFieldValue("oldPassExpiryDate", selectedDate),
           disabled: isSubmitting,
         }}
-        errorMessage={getIn(errors, "oldPassExpiryDate")}
+        errorMessage={
+          getIsInValidAndErrorMessage("oldPassExpiryDate").errorMessage
+        }
         controllerClass=""
       />
       <FormGroupWrapper

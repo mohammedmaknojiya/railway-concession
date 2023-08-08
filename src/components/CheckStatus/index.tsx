@@ -10,11 +10,10 @@ const CheckStatus = () => {
   const { isPhoneView } = useContext(AppViewContext);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(emailID);
+    navigate(`/status/${emailID}`);
     setEmailID("");
-    navigate("/status");
   };
 
   return (

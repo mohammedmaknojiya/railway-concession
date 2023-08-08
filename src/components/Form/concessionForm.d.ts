@@ -1,6 +1,7 @@
 declare type CFormInitialValues = {
   fullName: string;
   gender: string;
+  rollNumber: string;
   emailID: string;
   contact: string;
   dob: Date;

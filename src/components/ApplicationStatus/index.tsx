@@ -1,23 +1,91 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+import { getUserDetails } from "api/users";
 import SingleField from "./SingleField";
+import { toast } from "react-toastify";
+import Loader from "components/Loader";
+import NotFoundPage from "components/NotFoundPage";
 
 const ApplicationStatus = () => {
+  const [isFetching, setIsFetching] = useState(false);
+  const [userDetails, setUserDetails] = useState<UserDetailsAPIResp | null>(
+    null
+  );
+  const { emailID = "" } = useParams();
+
+  const getUserDetailsValue = (key: keyof UserDetailsAPIResp) => {
+    return userDetails?.[key] ? `${userDetails[key]}` : "-";
+  };
+
+  const getUserApplicationStatus = async () => {
+    try {
+      setIsFetching(true);
+      const response = await getUserDetails(emailID);
+      if (response.status === 201) {
+        setUserDetails({ ...response?.data });
+      } else {
+        toast.error("Unable to find user details");
+      }
+    } catch (err) {
+      toast.error("Unable to find user details");
+    } finally {
+      setIsFetching(false);
+    }
+  };
+
+  useEffect(() => {
+    getUserApplicationStatus();
+  }, []);
+
+  if (!userDetails) {
+    return (
+      <NotFoundPage message={`User request with ${emailID} is not present`} />
+    );
+  }
+
   return (
     <div className="container my-4 overflow-auto">
       <div className="text-center font-size-26 fw-bold mb-3">
         Application Status
       </div>
-      <div className="border rounded-8 p-3 light-shadow">
-        <SingleField label="ID" value="1234" />
-        <SingleField label="Name" value="Mohammed Maknojiya" />
-        <SingleField label="Source Station" value="Jogeshwari" />
-        <SingleField label="Destination Station" value="Mumbai Central" />
-        <SingleField label="Travel Class" value="First Class" />
-        <SingleField label="Duration" value="Quarterly" />
-        <SingleField label="Applied Date" value="28 January" />
-        <SingleField label="Status" value="Not Issued" />
-        <SingleField label="ID Card" value="Render Image here" />
-        <SingleField label="Remarks" value="No Remarks" borderBottom={false} />
-      </div>
+      <Loader isLoading={isFetching}>
+        <div className="border rounded-8 p-3 light-shadow">
+          <SingleField label="ID" value={getUserDetailsValue("rollNumber")} />
+          <SingleField
+            label="Enrollment Number"
+            value={getUserDetailsValue("enrollmentNumber")}
+          />
+          <SingleField label="Name" value={getUserDetailsValue("fullName")} />
+          <SingleField
+            label="Source Station"
+            value={getUserDetailsValue("sourceStation")}
+          />
+          <SingleField
+            label="Destination Station"
+            value={getUserDetailsValue("destinationStation")}
+          />
+          <SingleField
+            label="Travel Class"
+            value={getUserDetailsValue("travelClass")}
+          />
+          <SingleField
+            label="Duration"
+            value={getUserDetailsValue("passDuration")}
+          />
+          <SingleField
+            label="Applied Date"
+            value={getUserDetailsValue("appliedDate")}
+          />
+          <SingleField label="Status" value={getUserDetailsValue("status")} />
+          <SingleField label="ID Card" value="Render Image here" />
+          <SingleField
+            label="Remarks"
+            value={getUserDetailsValue("remarks")}
+            borderBottom={false}
+          />
+        </div>
+      </Loader>
     </div>
   );
 };

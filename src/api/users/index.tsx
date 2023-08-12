@@ -16,4 +16,9 @@ const getUserDetails = async (
   return response;
 };
 
-export { addUserDetails, getUserDetails };
+const getUsersList = async (): Promise<AxiosResponse<UserDetailsAPIResp[]>> => {
+  const response = await axios.get(`${API_ENDPOINT}/applicationsList`);
+  return response;
+};
+
+export { addUserDetails, getUserDetails, getUsersList };

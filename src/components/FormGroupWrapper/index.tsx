@@ -44,7 +44,7 @@ const FormGroupWrapper: React.FC<FormGroupWrapperProps> = ({
 
 export default FormGroupWrapper;
 
-const RenderController: React.FC<RenderControllerProps> = ({
+export const RenderController: React.FC<RenderControllerProps> = ({
   type,
   controllerProps,
   componentsProps,

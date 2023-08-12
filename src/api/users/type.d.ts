@@ -3,4 +3,5 @@ declare type UserDetailsAPIResp = CFormInitialValues & {
   status: string;
   remarks: string;
   enrollmentNumber: string;
+  _id: string;
 };

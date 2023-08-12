@@ -6,6 +6,7 @@ import SingleField from "./SingleField";
 import { toast } from "react-toastify";
 import Loader from "components/Loader";
 import NotFoundPage from "components/NotFoundPage";
+import { getFormattedDisplayDate } from "./../../utils/utils";
 
 const ApplicationStatus = () => {
   const [isFetching, setIsFetching] = useState(false);
@@ -75,7 +76,7 @@ const ApplicationStatus = () => {
           />
           <SingleField
             label="Applied Date"
-            value={getUserDetailsValue("appliedDate")}
+            value={getFormattedDisplayDate(getUserDetailsValue("appliedDate"))}
           />
           <SingleField label="Status" value={getUserDetailsValue("status")} />
           <SingleField label="ID Card" value="Render Image here" />

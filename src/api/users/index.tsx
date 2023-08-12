@@ -21,4 +21,25 @@ const getUsersList = async (): Promise<AxiosResponse<UserDetailsAPIResp[]>> => {
   return response;
 };
 
-export { addUserDetails, getUserDetails, getUsersList };
+const approveUsersApplication = async (userDetailsID: string) => {
+  const response = await axios.post(`${API_ENDPOINT}/approve`, {
+    id: userDetailsID,
+  });
+  return response;
+};
+
+const addRemarks = async (userDetailsID: string, remarks: string) => {
+  const response = await axios.post(`${API_ENDPOINT}/remarks`, {
+    id: userDetailsID,
+    remarks,
+  });
+  return response;
+};
+
+export {
+  addUserDetails,
+  getUserDetails,
+  getUsersList,
+  approveUsersApplication,
+  addRemarks,
+};

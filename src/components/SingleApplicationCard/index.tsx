@@ -1,5 +1,6 @@
 import { Col } from "react-bootstrap";
 import { EditFilled, EyeFilled } from "@fluentui/react-icons";
+import { getFormattedDisplayDate } from "utils/utils";
 
 const SingleCardField: React.FC<SingleCardField> = ({ label, value }) => {
   return (
@@ -32,7 +33,7 @@ const SingleApplicationCard: React.FC<SingleApplicationCardProps> = ({
       <div className="p-3 border rounded light-shadow m-3">
         <div className="d-flex align-items-center border-bottom pb-3">
           <div className="fw-bold font-size-20 flex-grow-1">
-            Mohammed Maknojiya
+            {getUserDetailsValue("fullName")}
           </div>
           <div>
             <EditFilled
@@ -63,7 +64,7 @@ const SingleApplicationCard: React.FC<SingleApplicationCardProps> = ({
           />
           <SingleCardField
             label="Applied Date:"
-            value={getUserDetailsValue("appliedDate")}
+            value={getFormattedDisplayDate(getUserDetailsValue("appliedDate"))}
           />
         </div>
       </div>

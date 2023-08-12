@@ -72,11 +72,13 @@ const ApplicationList = () => {
         userDetails={currentUserDetails}
         showUserDetails={showUserDetails}
         handleCloseUserDetailsModal={handleCloseUserDetailsModal}
+        getApplicationsList={getApplicationsList}
       />
       <AddRemark
         isEditClick={isEditClick}
         userDetails={currentUserDetails}
         handleCloseEdit={handleCloseEdit}
+        getApplicationsList={getApplicationsList}
       />
       <div className="overflow-auto">
         <div className="h3 text-center my-4">Applications List</div>

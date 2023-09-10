@@ -14,7 +14,15 @@ export const getUserDetailsSchema = () =>
     sourceStation: string().required("Source station is required"),
     destinationStation: string().required("Destination station is required"),
     prevPassNumber: string().required("Previous pass number is required"),
-    reEnterPrevPassNumber: string().required("Re-enter previous pass number"),
+    reEnterPrevPassNumber: string()
+      .test(
+        "prevPassNumber",
+        "Previous Pass Number should match",
+        function (reEnterPrevPassNumber) {
+          return reEnterPrevPassNumber === this.parent.prevPassNumber;
+        }
+      )
+      .required("Re-enter previous pass number"),
     oldVoucherNumber: string().required("Old voucher number is required"),
     oldPassExpiryDate: string().required("Old pass expiry date is required"),
     branch: string().required("Branch name is required"),

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
 import { getUserDetails } from "api/users";
@@ -19,7 +19,7 @@ const ApplicationStatus = () => {
     return userDetails?.[key] ? `${userDetails[key]}` : "-";
   };
 
-  const getUserApplicationStatus = async () => {
+  const getUserApplicationStatus = useCallback(async () => {
     try {
       setIsFetching(true);
       const response = await getUserDetails(emailID);
@@ -33,11 +33,11 @@ const ApplicationStatus = () => {
     } finally {
       setIsFetching(false);
     }
-  };
+  }, [emailID]);
 
   useEffect(() => {
     getUserApplicationStatus();
-  }, []);
+  }, [getUserApplicationStatus]);
 
   if (!userDetails) {
     return (
